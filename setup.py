@@ -5,7 +5,7 @@ pkg_name = 'element_optogenetics'
 here = path.abspath(path.dirname(__file__))
 
 long_description = """"
-DataJoint Element for Optogenetics Experiments.
+DataJoint Element for Trial Based Optogenetics Experiments.
 """
 
 with open(path.join(here, 'requirements.txt')) as f:
