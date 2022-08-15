@@ -1,25 +1,28 @@
+import inspect
+import importlib
 import datajoint as dj
 
 schema = dj.Schema()
 
 
-def activate(schema_name, create_schema=True, create_tables=True, linking_module=None):
+def activate(schema_name, create_schema=True, create_tables=True):
     """
     activate(schema_name, create_schema=True, create_tables=True)
-        :param schema_name: schema name on the database server to activate the `optogenetics` element
-        :param create_schema: when True (default), create schema in the database if it does not yet exist.
-        :param create_tables: when True (default), create tables in the database if they do not yet exist.
-        :param linking_module: a module name or a module containing the
-         required dependencies to activate the `subject` element:
-             Upstream tables:
-                + Device: Reference table for OptoProtocol, device to perform optogenetics experiments
-                + Session: Parent table to OptoSession, typically identifying a recording session
-                + SessionTrial: Parent table to OptoTrial, passive trial or behavioral trial
-                + BrainRegion: Reference table for OptoSession.BrainRegion, specifying the skull reference, such as bregma or lambda
-                + SkullReference: Reference table for OptoSession.BrainLocation, specifying the brain region
+        :param schema_name: schema name on the database server to use on activation
+        :param create_schema: when True (default), create schema if nonexistent
+        :param create_tables: when True (default), create tables if nonexistent
+        :param linking_module: a module name or module containing required dependencies
 
-
+        Upstream tables:
+            + Device: Referenced by OptoProtocol. Device to perform procedure
+            + Session: Parent to OptoSession. Typically identifying a recording session
+            + SessionTrial: Parent to OptoTrial. Passive or behavioral trial
+            + BrainRegion: Referenced by OptoSession.BrainRegion.
+                           Specifying the skull reference, such as bregma or lambda
+            + SkullReference: Referenced by OptoSession.BrainLocation.
+                              Specifying brain region
     """
+
     schema.activate(
         schema_name, create_schema=create_schema, create_tables=create_tables
     )
@@ -81,17 +84,17 @@ class OptoWaveform(dj.Lookup):
 
 
 @schema
-class OptoProtocol(dj.Manual):
+class OptoProtocol(dj.Manual):  # TODO: Add hash?
     definition = """
     # OptoProtocol defines a single opto stimulus repeat
     opto_protocol_id     : smallint
     ---
     -> OptoWaveform
     -> Device
-    opto_wavelength      : smallint         # (nm) wavelength of the photo stimulation light
-    opto_power           : decimal(6, 2)    # (mW) total power coming out of the light source
-    opto_frequency       : decimal(5, 1)    # (Hz) frequency of waveform
-    opto_duration        : decimal(5, 1)    # (ms) duration of each optostimulus
+    opto_wavelength      : smallint              # (nm) wavelength of photo stim. light
+    opto_power           : decimal(6, 2)         # (mW) total power from light source
+    opto_frequency       : decimal(5, 1)         # (Hz) frequency of the waveform
+    opto_duration        : decimal(5, 1)         # (ms) duration of each optostimulus
     opto_protocol_description='' : varchar(255)  # description of optogenetics protocol
     """
 
@@ -113,7 +116,7 @@ class OptoSession(dj.Manual):
         -> master
         -> BrainRegion
         ---
-        light_intensity   : decimal(6, 2)  # (mW/mm2) light intensity at each brain region
+        light_intensity   : decimal(6, 2)  # (mW/mm2) light intensity for brain region
         """
 
     class BrainLocation(dj.Part):
@@ -121,13 +124,13 @@ class OptoSession(dj.Manual):
         -> master
         location_id : int
         ---
-        ap_location : decimal(6, 2) # (um) anterior-posterior; ref is 0; more anterior is more positive
-        ml_location : decimal(6, 2) # (um) medial axis; ref is 0 ; more right is more positive
-        depth       : decimal(6, 2) # (um) manipulator depth relative to surface of the brain (0); more ventral is more negative
-        theta       : decimal(5, 2) # (deg) - elevation - rotation about the ml-axis [0, 180] - w.r.t the z+ axis
-        phi         : decimal(5, 2) # (deg) - azimuth - rotation about the dv-axis [0, 360] - w.r.t the x+ axis
+        ap_location : decimal(6, 2) # (um) anterior-posterior; ref 0; Anterior Positive
+        ml_location : decimal(6, 2) # (um) medial axis; ref 0; Right Positive
+        depth       : decimal(6, 2) # (um) Relative to surface (0); Ventral Negative
+        theta       : decimal(5, 2) # (deg) Elevation - rot about ml-axis [0, 180] WRT Z
+        phi         : decimal(5, 2) # (deg) Azimuth - rot about dv-axis [0, 360] WRT X
         -> BrainRegion
-        light_intensity : decimal(6, 2) # (mW/mm2) light intensity at each brain location
+        light_intensity : decimal(6, 2) # (mW/mm2) light intensity at each location
         """
 
 
@@ -138,13 +141,13 @@ class OptoTrial(dj.Imported):
     -> OptoSession
     """
 
-    class Event(dj.Part):
+    class Event(dj.Part):  # TODO: Pull from element-event?
         definition = """
         -> master
         opto_event_id         :
         ---
-        opto_stim_start_time  : float  # (ms) opto stimulus start time relative to the trial start
-        opto_stim_end_time    : float  # (ms) opto stimulus end time relative to the trial start
+        opto_stim_start_time  : float  # (ms) stimulus start time WRT trial start
+        opto_stim_end_time    : float  # (ms) stimulus end time WRT trial start
         -> OptoSession.Protocol
         """
 
