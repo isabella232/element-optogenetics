@@ -20,7 +20,9 @@ def activate(schema_name, create_schema=True, create_tables=True, linking_module
 
 
     """
-    schema.activate(schema_name, create_schema=create_schema, create_tables=create_tables)
+    schema.activate(
+        schema_name, create_schema=create_schema, create_tables=create_tables
+    )
 
 
 @schema
@@ -28,7 +30,7 @@ class OptoWaveformType(dj.Lookup):
     definition = """
     opto_waveform_type:    varchar(32)
     """
-    contents = zip(['Square', 'Ramp', 'Sine'])
+    contents = zip(["Square", "Ramp", "Sine"])
 
 
 @schema
