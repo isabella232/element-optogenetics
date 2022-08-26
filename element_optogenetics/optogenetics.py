@@ -1,5 +1,3 @@
-import inspect
-import importlib
 import datajoint as dj
 
 schema = dj.Schema()
@@ -13,14 +11,15 @@ def activate(schema_name, create_schema=True, create_tables=True):
         :param create_tables: when True (default), create tables if nonexistent
         :param linking_module: a module name or module containing required dependencies
 
-        Upstream tables:
-            + Device: Referenced by OptoProtocol. Device to perform procedure
-            + Session: Parent to OptoSession. Typically identifying a recording session
-            + SessionTrial: Parent to OptoTrial. Passive or behavioral trial
-            + BrainRegion: Referenced by OptoSession.BrainRegion.
-                           Specifying the skull reference, such as bregma or lambda
-            + SkullReference: Referenced by OptoSession.BrainLocation.
-                              Specifying brain region
+    Upstream tables:
+        + Device: Referenced by OptoProtocol. Device to perform procedure
+        + Session: Parent to OptoSession. Typically identifying a recording session
+        + Trial: Parent to OptoTrial. Optionally from Element-Event
+        + Event: Parent to OptoTrial. Optionally from Element-Event
+        + BrainRegion: Referenced by OptoSession.BrainRegion.
+                       Specifying the skull reference, such as bregma or lambda
+        + SkullReference: Referenced by OptoSession.BrainLocation.
+                          Specifying brain region
     """
 
     schema.activate(
@@ -40,40 +39,39 @@ class OptoWaveformType(dj.Lookup):
 class OptoWaveform(dj.Lookup):
     definition = """
     # OptoWaveform defines the shape of one cycle of the optogenetic stimulus
-    opto_waveform_name              : varchar(32)
+    opto_waveform_name            : varchar(32)
     ---
     -> OptoWaveformType
-    opto_normalized_waveform=null   : longblob    # Waveform for one cycle of the optogenetics stimulation, normalized to peak
-    opto_waveform_description=''    : varchar(255)  # description of the waveform
+    opto_normalized_waveform=null : longblob      # For one cycle, normalized to peak
+    opto_waveform_description=''  : varchar(255)  # description of the waveform
     """
 
     class Square(dj.Part):
         definition = """
         -> master
         ---
-        opto_on_proportion      : decimal(2, 2) # proportion of stim on time within a cycle
-        opto_off_proportion     : decimal(2, 2) # proportion of stim off time within a cycle
+        opto_on_proportion  : decimal(2, 2) # prop of stim on time within a cycle
+        opto_off_proportion : decimal(2, 2) # prop of stim off time within a cycle
         """
 
     class Ramp(dj.Part):
         definition = """
         -> master
         ---
-        ramp_up_proportion    : decimal(2, 2)  # ramp up proportion of the linear waveform
-        ramp_down_proportion  : decimal(2, 2)  # ramp down proportion of the linear waveform
+        ramp_up_proportion   : decimal(2, 2) # ramp up prop of the linear waveform
+        ramp_down_proportion : decimal(2, 2) # ramp down prop of the linear waveform
         """
 
     class Sine(dj.Part):
-        deinition = """
+        deinition = """ # Starting_phase ranges (0, 2]. 0 for Sine, 0.5 for Cosine
         -> master
         ---
         number_of_cycles  : smallint
-        starting_phase=0  : decimal(3, 2) # (pi) phase of sine wave at the beginning of the cycle, ranging (0, 2], 0 for a Sine wave, 0.5 for a Cosine wave.
+        starting_phase=0  : decimal(3, 2) # (pi) phase at the beginning of the cycle
         """
 
     class CustomParameter(dj.Part):
-        # Parameters
-        definition = """
+        definition = """ # Custom optogenetic stimulation waveform parameters
         -> master
         opto_waveform_parameter_name                 : varchar(32)
         ---
@@ -86,7 +84,7 @@ class OptoWaveform(dj.Lookup):
 @schema
 class OptoProtocol(dj.Manual):  # TODO: Add hash?
     definition = """
-    # OptoProtocol defines a single opto stimulus repeat
+    # OptoProtocol defines a single opto stimulus that repeats
     opto_protocol_id     : smallint
     ---
     -> OptoWaveform
@@ -111,7 +109,7 @@ class OptoSession(dj.Manual):
         -> OptoProtocol
         """
 
-    class BrainRegion(dj.Part):
+    class BrainRegion(dj.Part):  # TODO: split coordinate_framework.py to own Element?
         definition = """
         -> master
         -> BrainRegion
@@ -137,17 +135,15 @@ class OptoSession(dj.Manual):
 @schema
 class OptoTrial(dj.Imported):
     definition = """
-    -> SessionTrial
+    -> Trial
     -> OptoSession
     """
 
-    class Event(dj.Part):  # TODO: Pull from element-event?
+    class OptoEvent(dj.Part):  # TODO: Pull from element-event?
         definition = """
         -> master
-        opto_event_id         :
+        -> Event
         ---
-        opto_stim_start_time  : float  # (ms) stimulus start time WRT trial start
-        opto_stim_end_time    : float  # (ms) stimulus end time WRT trial start
         -> OptoSession.Protocol
         """
 
