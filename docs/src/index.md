@@ -1,4 +1,4 @@
-# DataJoint Element - Optogenetics
+# Element Optogenetics
 
 DataJoint Element for Optogenetics research. DataJoint Elements collectively standardize
 and automate data collection and analysis for neuroscience experiments.  Each Element is
@@ -7,5 +7,8 @@ tables that can be combined with other Elements to assemble a fully functional p
 
 ![diagram](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/diagram_flowchart.svg)
 
-Installation and usage instructions can be found at the
-[Element documentation](httpws://datajoint.com/docs/elements/element-optogenetics).
+The Element is composed of one schema for storing and managing optogenetics data.
+
+Visit the [Concepts page](./concepts.md) for more information on optogenetics research
+and Element Optogenetics.  To get started with building your data pipeline visit the
+[Tutorials page](./tutorials.md).
