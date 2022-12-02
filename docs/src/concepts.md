@@ -61,11 +61,11 @@ documentation on each table, see the API docs for the respective schemas.
 
 | Table | Description |
 | --- | --- |
-| WaveformType | Basic Waveform types (e.g., Square, Ramp, Sine) |
-| Waveform | Waveform full characteristics, including type-specific part tables |
-| Protocol | Stimulation protocol |
-| SessionProtocol | Pairing of session and protocol |
-| SessionBrainLocation | Pairing of session and brain surgery location information |
+| OptoWaveformType | Basic Waveform types (e.g., Square, Ramp, Sine) |
+| OptoWaveform | Waveform full characteristics, including type-specific part tables |
+| OptoProtocol | Stimulation protocol |
+| SessionOptoProtocol | Pairing of session and protocol |
+| SessionOptoBrainLocation | Pairing of session and brain surgery location information |
 
 ## Roadmap
 

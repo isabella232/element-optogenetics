@@ -52,7 +52,7 @@ def activate(
 
 
 @schema
-class WaveformType(dj.Lookup):
+class OptoWaveformType(dj.Lookup):
     """
     Attributes:
         waveform_type ( varchar(32) ): Waveform type (e.g., square, sine)
@@ -65,7 +65,7 @@ class WaveformType(dj.Lookup):
 
 
 @schema
-class Waveform(dj.Lookup):
+class OptoWaveform(dj.Lookup):
     """OptoWaveform defines the shape of one cycle of the optogenetic stimulus
 
     Attributes:
@@ -79,7 +79,7 @@ class Waveform(dj.Lookup):
     # OptoWaveform defines the shape of one cycle of the optogenetic stimulus
     waveform_name            : varchar(32)
     ---
-    -> WaveformType
+    -> OptoWaveformType
     normalized_waveform=null : longblob      # For one cycle, normalized to peak
     waveform_description=''  : varchar(255)  # description of the waveform
     """
@@ -173,7 +173,7 @@ class OptoProtocol(dj.Manual):
     # Protocol defines a single opto stimulus that repeats
     protocol_id     : smallint
     ---
-    -> Waveform
+    -> OptoWaveform
     -> Device
     wavelength      : smallint              # (nm) wavelength of photo stim. light
     power           : decimal(6, 2)         # (mW) total power from light source
@@ -184,7 +184,7 @@ class OptoProtocol(dj.Manual):
 
 
 @schema
-class SessionProtocol(dj.Manual):
+class SessionOptoProtocol(dj.Manual):
     """Session protocol
 
     Attributes:
@@ -199,7 +199,7 @@ class SessionProtocol(dj.Manual):
 
 
 @schema
-class SessionBrainLocation(dj.Manual):
+class SessionOptoBrainLocation(dj.Manual):
     """Session brain location
 
     WRT: With Respect To
