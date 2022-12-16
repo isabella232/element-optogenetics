@@ -24,24 +24,19 @@ def activate(
 
     Dependencies:
         Upstream tables:
-            Device: Referenced by Protocol. Device to perform procedure
-            Session: Parent to Session. Typically identifying a recording session
-            Trial: Parent to OptoTrial. Optionally from Element-Event
-            Event: Parent to OptoTrial. Optionally from Element-Event
-            SkullReference: Referenced by Session.SkullReference.
-                Specifying the skull reference, such as bregma or lambda
+            Device: Referenced by OptoProtocol. Device to perform procedure
+            Session: Referenced by OptoProtocol. Typically a recording session
+            Implantation: Referenced by OptoProtocol. A surgery for opto fiber.
     """
 
     if isinstance(linking_module, str):
         linking_module = importlib.import_module(linking_module)
     assert inspect.ismodule(
         linking_module
-    ), "The argument 'dependency' must be a module's name or a module"
+    ), "The argument 'linking_module' must be a module's name or a module"
 
     global _linking_module
     _linking_module = linking_module
-
-    # activate
 
     schema.activate(
         schema_name,
@@ -53,7 +48,8 @@ def activate(
 
 @schema
 class OptoWaveformType(dj.Lookup):
-    """
+    """Stimulus waveform type (e.g., square, sine, etc.)
+
     Attributes:
         waveform_type ( varchar(32) ): Waveform type (e.g., square, sine)
     """
@@ -68,11 +64,13 @@ class OptoWaveformType(dj.Lookup):
 class OptoWaveform(dj.Lookup):
     """OptoWaveform defines the shape of one cycle of the optogenetic stimulus
 
+    Child tables specify features of specific waveforms (e.g., square, sine, etc.)
+
     Attributes:
         waveform_name ( varchar(32) ): Name of waveform
         OptoWaveformType (foreign key): OptoWaveformType primary key
         normalized_waveform (longblob, nullable): For one cycle, normalized to peak
-        waveform_description ( varchar(255), nullable ): Description
+        waveform_description ( varchar(255), nullable ): Description of waveform
     """
 
     definition = """
@@ -133,102 +131,76 @@ class OptoWaveform(dj.Lookup):
         starting_phase=0  : decimal(3, 2) # (pi) phase at the beginning of the cycle
         """
 
-    class CustomParameter(dj.Part):
-        """Custom optogenetic stimulation waveform parameters
-
-        Attributes:
-            OptoWaveform (foreign key): OptoWaveform primary key
-            waveform_parameter_name ( varchar(32) ): Parameter name
-            waveform_parameter_value (float, nullable): Parameter numerical value
-            waveform_parameter_value_str ( varchar(32), nullable): Parameter string value
-            waveform_parameter_value_blob (blob, nullable): Parameter blob
-        """
-
-        definition = """ # Custom optogenetic stimulation waveform parameters
-        -> master
-        waveform_parameter_name                 : varchar(32)
-        ---
-        waveform_parameter_value=null           : float
-        waveform_parameter_value_str=null       : varchar(32)
-        waveform_parameter_value_blob=null      : blob
-        """
-
 
 @schema
-class OptoProtocol(dj.Manual):
-    """Protocol defines a single opto stimulus that repeats
+class OptoStimParams(dj.Manual):
+    """A single opto stimulus that repeats
+
+    Power and intensity are both nullable. Users may wish to document one or the other.
 
     Attributes:
-        protocol_id (smallint): Protocol ID
+        opto_params_id (smallint): Stimulus parameter ID
         OptoWaveform (foreign key): OptoWaveform primary key
         Device (foreign key): Device primary key
         wavelength (smallint): Wavelength in nm of photo stim. light
-        power ( decimal(6, 2) ): Total power in mW from light source
+        power ( decimal(6, 2), nullable ): Total power in mW from light source
+        intensity ( decimal(6, 2), nullable ): Power for given area
         frequency ( decimal(5, 1) ): Frequency in Hz of the waveform
         duration ( decimal(5, 1) ): Duration in ms of each optostimulus
         protocol_description ( varchar(255) ): Protocol description
     """
 
     definition = """
-    # Protocol defines a single opto stimulus that repeats
-    protocol_id     : smallint
+    # Defines a single opto stimulus that repeats
+    opto_params_id     : smallint
     ---
     -> OptoWaveform
-    -> Device
-    wavelength      : smallint              # (nm) wavelength of photo stim. light
-    power           : decimal(6, 2)         # (mW) total power from light source
-    frequency       : decimal(5, 1)         # (Hz) frequency of the waveform
-    duration        : decimal(5, 1)         # (ms) duration of each optostimulus
-    protocol_description='' : varchar(255)  # description of optogenetics protocol
+    wavelength           : int             # (nm) wavelength of photo stim. light
+    power=null           : decimal(6, 2)   # (mW) total power from light source
+    light_intensity=null : decimal(6, 2)   # (mW/mm2) light intensity
+    frequency            : decimal(5, 1)   # (Hz) frequency of the waveform
+    duration             : decimal(5, 1)   # (ms) duration of each opto stimulus
+    protocol_description='' : varchar(255) # description of optogenetics protocol
     """
 
 
 @schema
-class SessionOptoProtocol(dj.Manual):
-    """Session protocol
+class OptoProtocol(dj.Manual):
+    """Protocol for a given session, applying a simulus to an implantation via a device
 
     Attributes:
+        protocol_id (int): Protocol ID
         Session (foreign key): Session primary key
-        OptoProtocol (foreign key): OptoProtocol primary key
+        OptoStimParams (foreign key): OptoStimParams primary key
+        Implantation (foreign key): Implantation primary key
+        Device  (foreign key, nullable): Device  primary key
     """
 
     definition = """
     -> Session
-    -> OptoProtocol
-    """
-
-
-@schema
-class SessionOptoBrainLocation(dj.Manual):
-    """Session brain location
-
-    WRT: With Respect To
-
-    Attributes:
-        Session (foreign key): Session primary key
-        location_id (int): ID of of brain location
-        ap_location ( decimal(6, 2) ): In um, Anterior/posterior; Anterior Positive
-        ml_location ( decimal(6, 2) ): In um, medial axis; Right Positive
-        depth ( decimal(6, 2) ): In um, Relative to surface (0); Ventral Negative
-        theta ( decimal(5, 2) ): Elevation in degrees. Rotation about
-            ml-axis [0, 180] WRT Z
-        phi ( decimal(5, 2) ): Azimuth in degrees. Rotations about
-            dv-axis [0, 360] WRT X
-        SkullReference (foreign key): SkullReference primary key
-        light_intensity ( decimal(6, 2) ): (mW/mm2) light intensity at this location
-        description ( varchar(255), nullable): brain location description
-    """
-
-    definition = """
-    -> Session
-    location_id : int
+    protocol_id: int
     ---
-    ap_location : decimal(6, 2) # (um) anterior-posterior; ref 0; Anterior Positive
-    ml_location : decimal(6, 2) # (um) medial axis; ref 0; Right Positive
-    depth       : decimal(6, 2) # (um) Relative to surface (0); Ventral Negative
-    theta       : decimal(5, 2) # (deg) Elevation - rot about ml-axis [0, 180] WRT Z
-    phi         : decimal(5, 2) # (deg) Azimuth - rot about dv-axis [0, 360] WRT X
-    -> SkullReference
-    light_intensity : decimal(6, 2) # (mW/mm2) light intensity at each location
-    description=""  : varchar(255) # Brain region description
+    -> OptoStimParams
+    -> Implantation
+    -> [nullable] Device
+    """
+
+
+@schema
+class OptoEvent(dj.Manual):
+    """Event within a session
+
+    WRT: with respect to
+
+    Attributes:
+        OptoProtocol (foreign key): OptoProtocol primary key
+        stim_start_time (float): Stimulus start time in seconds wrt session start
+        stim_end_time (float): Stimulus end time in seconds wrt session start
+    """
+
+    definition = """
+    -> OptoProtocol
+    stim_start_time  : float  # (s) opto stimulus start time wrt session start
+    ---
+    stim_end_time    : float  # (s) opto stimulus end time wrt session start
     """

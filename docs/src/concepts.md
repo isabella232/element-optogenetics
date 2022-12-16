@@ -59,14 +59,19 @@ documentation on each table, see the API docs for the respective schemas.
 
 ### `opto` schema ([API docs](../api/element_optogenetics/optogenetics))
 
-| Table | Description |
-| --- | --- |
-| OptoWaveformType | Basic Waveform types (e.g., Square, Ramp, Sine) |
-| OptoWaveform | Waveform full characteristics, including type-specific part tables |
-| OptoProtocol | Stimulation protocol |
-| SessionOptoProtocol | Pairing of session and protocol |
-| SessionOptoBrainLocation | Pairing of session and brain surgery location information |
+| Table               | Description |
+| ---                 |   ---       |
+| OptoWaveformType    | Stimulus waveform type                         |
+| OptoWaveform        | Shape of one cycle of the optogenetic stimulus |
+| OptoWaveform.Square | Square waveform                                |
+| OptoWaveform.Ramp   | Ramp waveform                                  |
+| OptoWaveform.Sine   | Sine Waveform                                  |
+| OptoStimParams      | A single stimulus that repeats                 |
+| OptoProtocol        | Protocol for a given session                   |
+| OptoEvent           | Event within a session                         |
 
 ## Roadmap
 
-Further development of this Element is community driven.  Upon user requests and based on guidance from the Scientific Steering Group we will add further features to this Element.
+Further development of this Element is community driven.  Upon user requests and based
+on guidance from the Scientific Steering Group we will add further features to this
+Element.
