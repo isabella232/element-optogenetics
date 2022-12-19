@@ -25,9 +25,9 @@ Each of the
 [notebooks](https://github.com/datajoint/workflow-optogenetics/tree/main/notebooks) in 
 the workflow steps through ways to interact with the Element itself. 
 
-- [Configure](./01-Configure.ipynb)
+- [Configure](./01-configure.ipynb)
    helps configure your local DataJoint installation to point to the correct database.
-- [Workflow Structure](./02-WorkflowStructure_Optional.ipynb) demonstrates the table
+- [Workflow Structure](./02-workflow-structure-optional.ipynb) demonstrates the table
    architecture of the Element and key DataJoint basics for interacting with these
    tables.
-- [Process](./03-Process.ipynb) steps through adding data to these tables.
+- [Process](./03-process.ipynb) steps through adding data to these tables.

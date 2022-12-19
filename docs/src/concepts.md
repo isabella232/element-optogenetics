@@ -37,13 +37,13 @@ documentation on each table, see the API docs for the respective schemas.
 
 ![element-optogenetics diagram](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/diagram_opto.svg)
 
-### `lab` schema ([API docs](../api/workflow_Optogenetics/pipeline/#workflow_Optogenetics.pipeline.Device))
+### `reference` schema ([API docs](../api/workflow_Optogenetics/pipeline/#workflow_Optogenetics.reference.Device))
 
 | Table | Description |
 | --- | --- |
 | Device | Pulse generator device |
 
-### `subject` schema ([API docs](https://datajoint.com/docs/elements/element-animal/api/element_animal/subject))
+### `subject` schema ([API docs](https://datajoint.com/docs/elements/element-animal/latest/api/element_animal/subject/#element_animal.subject.Subject))
 
 - Although not required, most choose to connect the `Session` table to a `Subject` table.
 
@@ -51,7 +51,16 @@ documentation on each table, see the API docs for the respective schemas.
 | --- | --- |
 | Subject | Basic information of the research subject |
 
-### `session` schema ([API docs](https://datajoint.com/docs/elements/element-session/api/element_session/session_with_id))
+### `surgery` schema ([API docs](https://datajoint.com/docs/elements/element-animal/latest/api/element_animal/surgery/#element_animal.surgery.Implantation))
+
+- Although not required, most choose to connect the `OptoProtocol` table to an
+  `Implantation` table.
+
+| Table | Description |
+| --- | --- |
+| Implantation | Location of an implanted device |
+
+### `session` schema ([API docs](https://datajoint.com/docs/elements/element-session/latest/api/element_session/session_with_id))
 
 | Table | Description |
 | --- | --- |

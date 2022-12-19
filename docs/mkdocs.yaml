@@ -7,7 +7,11 @@ repo_name: datajoint/element-optogenetics
 nav:
   - Element Optogenetics: index.md
   - Concepts: concepts.md
-  - Tutorials: tutorials.md
+  - Tutorials: 
+    - Overview: tutorials/index.md
+    - Configure: tutorials/01-configure.ipynb
+    - Workflow Structure: tutorials/02-workflow-structure-optional.ipynb
+    - Process: tutorials/03-process.ipynb
   - Citation: citation.md
   - API: api/ # defer to gen-files + literate-nav
   - Changelog: changelog.md
@@ -107,6 +111,9 @@ plugins:
   - exclude-search:
       exclude:
         - "*/navigation.md"
+  - mkdocs-jupyter:
+      ignore_h1_titles: True
+      ignore: ["*make_pages.py"]
 
 markdown_extensions:
   - attr_list

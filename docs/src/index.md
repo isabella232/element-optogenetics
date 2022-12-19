@@ -11,4 +11,4 @@ The Element is composed of one schema for storing and managing optogenetics data
 
 Visit the [Concepts page](./concepts.md) for more information on optogenetics research
 and Element Optogenetics.  To get started with building your data pipeline visit the
-[Tutorials page](./tutorials.md).
+[Tutorials page](./tutorials/index.md).

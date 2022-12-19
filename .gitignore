@@ -85,3 +85,4 @@ temp*
 temp/*
 *nwb
 /docs/site
+/docs/src/tutorials/*ipynb
