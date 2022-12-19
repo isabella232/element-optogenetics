@@ -6,11 +6,8 @@ The seminal 2005 paper[^1] by Karl Deisseroth and colleagues established a strat
 using light (*opto-*) to directly regulate the activation of genetically modified
 (*-genetics*) neurons. By incorporating genes from photosensitive algae, neurons become
 sensitive to different wavelengths for either excitation or inhibition.
-
-In other areas of reseach, researchs can look at the correlation between neuronal
-firings and animal behavior. By being able to look for the presence or absence of
-behavior with or without optogenetic stimulation, researchers can draw more direct
-causal links between neuronal populations and corresponding behavior.
+Scientists now use this technology to draw more direct
+causal links between the activity of neuronal populations and corresponding animal behavior.
 
 [^1]: Boyden, E. S., Zhang, F., Bamberg, E., Nagel, G., & Deisseroth, K. (2005).
     [Millisecond-timescale, genetically targeted optical control of neural activity](https://www.nature.com/articles/nn1525).
@@ -18,21 +15,24 @@ causal links between neuronal populations and corresponding behavior.
 
 ## Key Partnerships
 
-Key members of the [U19 BrainCOGS project](https://www.braincogs.org/) at Princeton
+Key members of the [U19 BrainCoGS project](https://www.braincogs.org/) at Princeton
 University were consulted during development. The
-[MATLAB U19 pipeline](https://github.com/BrainCOGS/U19-pipeline-matlab/tree/master/schemas/%2Boptogenetics)
+[U19 BrainCoGS MATLAB pipeline](https://github.com/BrainCOGS/U19-pipeline-matlab/tree/master/schemas/%2Boptogenetics)
 serves as an important precursor project to this Element.
 
 ## Element Features
 
-This Element stores key information about optogenetic stimulus protocols and their
-implementation in a given recording session.
+This Element stores key information about optogenetic stimulus protocols used during experimental sessions:
+- Stimulus parameters (waveform properties, wavelength, power, duration, etc.)
+- Implant location of the optical fiber.
+- Stimulus pulse generator.
+- Stimulus start and end times during an experimental session.
 
 ## Element Architecture
 
 Each node in the following diagram represents the analysis code in the workflow and the
 corresponding tables in the database.  Within the workflow, Element Optogenetics connects
-to upstream Elements including Lab, Animal, Session, and Event.  For more detailed
+to upstream Elements including Lab, Animal, and Session.  For more detailed
 documentation on each table, see the API docs for the respective schemas.
 
 ![element-optogenetics diagram](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/diagram_opto.svg)
@@ -41,7 +41,7 @@ documentation on each table, see the API docs for the respective schemas.
 
 | Table | Description |
 | --- | --- |
-| Device | Pulse sequence device |
+| Device | Pulse generator device |
 
 ### `subject` schema ([API docs](https://datajoint.com/docs/elements/element-animal/api/element_animal/subject))
 
@@ -51,24 +51,24 @@ documentation on each table, see the API docs for the respective schemas.
 | --- | --- |
 | Subject | Basic information of the research subject |
 
-### `session` schema ([API docs](https://datajoint.com/docs/elements/element-session/api/element_session/session_with_datetime))
+### `session` schema ([API docs](https://datajoint.com/docs/elements/element-session/api/element_session/session_with_id))
 
 | Table | Description |
 | --- | --- |
 | Session | Unique experimental session identifier |
 
-### `opto` schema ([API docs](../api/element_optogenetics/optogenetics))
+### `optogenetics` schema ([API docs](../api/element_optogenetics/optogenetics))
 
 | Table               | Description |
 | ---                 |   ---       |
-| OptoWaveformType    | Stimulus waveform type                         |
-| OptoWaveform        | Shape of one cycle of the optogenetic stimulus |
-| OptoWaveform.Square | Square waveform                                |
-| OptoWaveform.Ramp   | Ramp waveform                                  |
-| OptoWaveform.Sine   | Sine Waveform                                  |
-| OptoStimParams      | A single stimulus that repeats                 |
-| OptoProtocol        | Protocol for a given session                   |
-| OptoEvent           | Event within a session                         |
+| OptoWaveformType | Stimulus waveform type (e.g., square, ramp, sine) |
+| OptoWaveform | Shape of one cycle of the stimulus waveform |
+| OptoWaveform.Square | Square waveform properties |
+| OptoWaveform.Ramp | Ramp waveform properties |
+| OptoWaveform.Sine | Sine waveform properties |
+| OptoStimParams | Stimulus parameters |
+| OptoProtocol | Protocol for a given session |
+| OptoEvent | Start and end time of the stimulus within a session |
 
 ## Roadmap
 

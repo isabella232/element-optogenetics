@@ -30,5 +30,4 @@ the workflow steps through ways to interact with the Element itself.
 - [Workflow Structure](./02-WorkflowStructure_Optional.ipynb) demonstrates the table
    architecture of the Element and key DataJoint basics for interacting with these
    tables.
-- [Process](./03-Process.ipynb) steps through adding data to these tables and launching
-   key DeepLabCut features, like model training.
+- [Process](./03-Process.ipynb) steps through adding data to these tables.

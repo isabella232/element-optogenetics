@@ -10,7 +10,7 @@ def activate(
     *,
     create_schema: bool = True,
     create_tables: bool = True,
-    linking_module: bool = None
+    linking_module: str = None
 ):
     """Activate this schema.
 
@@ -24,9 +24,9 @@ def activate(
 
     Dependencies:
         Upstream tables:
-            Device: Referenced by OptoProtocol. Device to perform procedure
-            Session: Referenced by OptoProtocol. Typically a recording session
-            Implantation: Referenced by OptoProtocol. A surgery for opto fiber.
+            Device: Referenced by OptoProtocol. Pulse generator used for stimulation.
+            Session: Referenced by OptoProtocol. Typically a recording session.
+            Implantation: Referenced by OptoProtocol. Location of the implanted optical fiber.
     """
 
     if isinstance(linking_module, str):
@@ -87,15 +87,15 @@ class OptoWaveform(dj.Lookup):
 
         Attributes:
             OptoWaveform (foreign key): OptoWaveform primary key
-            on_proportion ( decimal(2, 2) ): Proportion of stim on time within a cycle
-            off_proportion ( decimal(2, 2) ): Proportion of stim off time within a cycle
+            on_proportion ( decimal(2, 2) ): Proportion of stimulus on time within a cycle
+            off_proportion ( decimal(2, 2) ): Proportion of stimulus off time within a cycle
         """
 
         definition = """
         -> master
         ---
-        on_proportion  : decimal(2, 2) # prop of stim on time within a cycle
-        off_proportion : decimal(2, 2) # prop of stim off time within a cycle
+        on_proportion  : decimal(2, 2) # Proportion of stimulus on time within a cycle
+        off_proportion : decimal(2, 2) # Proportion of stimulus off time within a cycle
         """
 
     class Ramp(dj.Part):
@@ -110,8 +110,8 @@ class OptoWaveform(dj.Lookup):
         definition = """
         -> master
         ---
-        ramp_up_proportion   : decimal(2, 2) # ramp up prop of the linear waveform
-        ramp_down_proportion : decimal(2, 2) # ramp down prop of the linear waveform
+        ramp_up_proportion   : decimal(2, 2) # Ramp up proportion of the linear waveform
+        ramp_down_proportion : decimal(2, 2) # Ramp down proportion of the linear waveform
         """
 
     class Sine(dj.Part):
@@ -134,46 +134,44 @@ class OptoWaveform(dj.Lookup):
 
 @schema
 class OptoStimParams(dj.Manual):
-    """A single opto stimulus that repeats
+    """A single optical stimulus that repeats.
 
     Power and intensity are both nullable. Users may wish to document one or the other.
 
     Attributes:
         opto_params_id (smallint): Stimulus parameter ID
         OptoWaveform (foreign key): OptoWaveform primary key
-        Device (foreign key): Device primary key
-        wavelength (smallint): Wavelength in nm of photo stim. light
+        wavelength (int): Wavelength in nm of optical stimulation light
         power ( decimal(6, 2), nullable ): Total power in mW from light source
-        intensity ( decimal(6, 2), nullable ): Power for given area
+        light_intensity ( decimal(6, 2), nullable ): Power for given area
         frequency ( decimal(5, 1) ): Frequency in Hz of the waveform
         duration ( decimal(5, 1) ): Duration in ms of each optostimulus
-        protocol_description ( varchar(255) ): Protocol description
     """
 
     definition = """
-    # Defines a single opto stimulus that repeats
+    # Defines a single optical stimulus that repeats.
     opto_params_id     : smallint
     ---
     -> OptoWaveform
-    wavelength           : int             # (nm) wavelength of photo stim. light
+    wavelength           : int             # (nm) wavelength of optical stimulation light
     power=null           : decimal(6, 2)   # (mW) total power from light source
-    light_intensity=null : decimal(6, 2)   # (mW/mm2) light intensity
+    light_intensity=null : decimal(6, 2)   # (mW/mm2) power for given area
     frequency            : decimal(5, 1)   # (Hz) frequency of the waveform
     duration             : decimal(5, 1)   # (ms) duration of each opto stimulus
-    protocol_description='' : varchar(255) # description of optogenetics protocol
     """
 
 
 @schema
 class OptoProtocol(dj.Manual):
-    """Protocol for a given session, applying a simulus to an implantation via a device
+    """Protocol for a given session.  This table ties together the fiber location, pulse generator, and stimulus parameters.
 
     Attributes:
-        protocol_id (int): Protocol ID
         Session (foreign key): Session primary key
+        protocol_id (int): Protocol ID
         OptoStimParams (foreign key): OptoStimParams primary key
         Implantation (foreign key): Implantation primary key
         Device  (foreign key, nullable): Device  primary key
+        protocol_description ( varchar(255), nullable ): Description of optogenetics protocol
     """
 
     definition = """
@@ -183,12 +181,13 @@ class OptoProtocol(dj.Manual):
     -> OptoStimParams
     -> Implantation
     -> [nullable] Device
+    protocol_description='' : varchar(255) # description of optogenetics protocol
     """
 
 
 @schema
 class OptoEvent(dj.Manual):
-    """Event within a session
+    """Start and end time of the stimulus within a session
 
     WRT: with respect to
 
