@@ -87,15 +87,15 @@ class OptoWaveform(dj.Lookup):
 
         Attributes:
             OptoWaveform (foreign key): OptoWaveform primary key
-            on_proportion ( decimal(2, 2) ): Proportion of stimulus on time within a cycle
-            off_proportion ( decimal(2, 2) ): Proportion of stimulus off time within a cycle
+            on_proportion ( decimal(2, 2) unsigned ): Proportion of stimulus on time within a cycle
+            off_proportion ( decimal(2, 2) unsigned ): Proportion of stimulus off time within a cycle
         """
 
         definition = """
         -> master
         ---
-        on_proportion  : decimal(2, 2) # Proportion of stimulus on time within a cycle
-        off_proportion : decimal(2, 2) # Proportion of stimulus off time within a cycle
+        on_proportion  : decimal(2, 2) unsigned # Proportion of stimulus on time within a cycle
+        off_proportion : decimal(2, 2) unsigned # Proportion of stimulus off time within a cycle
         """
 
     class Ramp(dj.Part):
@@ -103,15 +103,15 @@ class OptoWaveform(dj.Lookup):
 
         Attributes:
             OptoWaveform (foreign key): OptoWaveform primary key
-            ramp_up_proportion ( decimal(2, 2) ): Ramp up proportion of the linear waveform
-            ramp_down_proportion ( decimal(2, 2) ): Ramp down proportion of the linear waveform
+            ramp_up_proportion ( decimal(2, 2) unsigned ): Ramp up proportion of the linear waveform
+            ramp_down_proportion ( decimal(2, 2) unsigned ): Ramp down proportion of the linear waveform
         """
 
         definition = """
         -> master
         ---
-        ramp_up_proportion   : decimal(2, 2) # Ramp up proportion of the linear waveform
-        ramp_down_proportion : decimal(2, 2) # Ramp down proportion of the linear waveform
+        ramp_up_proportion   : decimal(2, 2) unsigned # Ramp up proportion of the linear waveform
+        ramp_down_proportion : decimal(2, 2) unsigned # Ramp down proportion of the linear waveform
         """
 
     class Sine(dj.Part):

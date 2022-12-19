@@ -8,7 +8,6 @@ https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
 import mkdocs_gen_files
 from pathlib import Path
 import os
-import subprocess
 
 package = os.getenv("PACKAGE")
 
