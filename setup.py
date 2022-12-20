@@ -1,30 +1,31 @@
-from setuptools import setup, find_packages
 from os import path
 
-pkg_name = 'element_optogenetics'
+from setuptools import find_packages, setup
+
+pkg_name = next(p for p in find_packages() if "." not in p)
 here = path.abspath(path.dirname(__file__))
 
-long_description = """"
-DataJoint Element for Trial Based Optogenetics Experiments.
-"""
+with open(path.join(here, "README.md"), "r") as f:
+    long_description = f.read()
 
-with open(path.join(here, 'requirements.txt')) as f:
+with open(path.join(here, "requirements.txt")) as f:
     requirements = f.read().splitlines()
 
-with open(path.join(here, pkg_name, 'version.py')) as f:
+with open(path.join(here, pkg_name, "version.py")) as f:
     exec(f.read())
 
 setup(
-    name='element-optogenentics',
-    version=__version__,
+    name=pkg_name.replace("_", "-"),
+    version=__version__,  # noqa F821
     description="DataJoint Element for Optogenetics",
     long_description=long_description,
-    author='DataJoint',
-    author_email='info@datajoint.com',
-    license='MIT',
-    url='https://github.com/datajoint/element-optogenetics',
-    keywords='neuroscience optogenetics science datajoint',
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    long_description_content_type="text/markdown",
+    author="DataJoint",
+    author_email="info@datajoint.com",
+    license="MIT",
+    url=f'https://github.com/datajoint/{pkg_name.replace("_", "-")}',
+    keywords="neuroscience optogenetics science datajoint",
+    packages=find_packages(exclude=["contrib", "docs", "tests*"]),
     scripts=[],
     install_requires=requirements,
 )
