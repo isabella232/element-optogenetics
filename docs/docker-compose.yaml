@@ -14,7 +14,7 @@ services:
       - PACKAGE
       - UPSTREAM_REPO
       - MODE
-      - GOOGLE_ANALYTICS_KEY 
+      - GOOGLE_ANALYTICS_KEY
       - PATCH_VERSION
     volumes:
       - ../docs:/main/docs
@@ -30,7 +30,7 @@ services:
         set -e
         export ELEMENT_NAME=$$(echo $${PACKAGE} | sed 's/element_//g')
         export PATCH_VERSION=$$(cat /main/$${PACKAGE}/version.py | grep -oE '\d+\.\d+\.[a-z0-9]+')
-        git clone https://github.com/cbroz1/workflow-$${ELEMENT_NAME}.git /main/delete || true
+        git clone https://github.com/datajoint/workflow-$${ELEMENT_NAME}.git /main/delete || true
         if [ -d /main/delete/ ]; then
           mv /main/delete/workflow_$${ELEMENT_NAME} /main/
           mv /main/delete/notebooks/*ipynb /main/docs/src/tutorials/
