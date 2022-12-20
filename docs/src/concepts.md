@@ -53,8 +53,7 @@ documentation on each table, see the API docs for the respective schemas.
 
 ### `surgery` schema ([API docs](https://datajoint.com/docs/elements/element-animal/latest/api/element_animal/surgery/#element_animal.surgery.Implantation))
 
-- Although not required, most choose to connect the `OptoProtocol` table to an
-  `Implantation` table.
+- The `Implantation` table can be user-defined , or one can choose to use the `surgery.Implantation` table from `element-animal`.
 
 | Table | Description |
 | --- | --- |
