@@ -1,5 +1,6 @@
-import inspect
 import importlib
+import inspect
+
 import datajoint as dj
 
 schema = dj.Schema()

@@ -1,5 +1,6 @@
-from setuptools import setup, find_packages
 from os import path
+
+from setuptools import find_packages, setup
 
 pkg_name = next(p for p in find_packages() if "." not in p)
 here = path.abspath(path.dirname(__file__))
@@ -15,16 +16,16 @@ with open(path.join(here, pkg_name, "version.py")) as f:
 
 setup(
     name=pkg_name.replace("_", "-"),
-    version=__version__,
+    version=__version__,  # noqa F821
     description="DataJoint Element for Optogenetics",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="DataJoint",
-    author_email='info@datajoint.com',
+    author_email="info@datajoint.com",
     license="MIT",
     url=f'https://github.com/datajoint/{pkg_name.replace("_", "-")}',
-    keywords='neuroscience optogenetics science datajoint',
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    keywords="neuroscience optogenetics science datajoint",
+    packages=find_packages(exclude=["contrib", "docs", "tests*"]),
     scripts=[],
     install_requires=requirements,
 )
