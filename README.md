@@ -5,7 +5,16 @@ and automate data collection and analysis for neuroscience experiments.  Each El
 a modular pipeline for data storage and processing with corresponding database
 tables that can be combined with other Elements to assemble a fully functional pipeline.
 
-![diagram](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/diagram_flowchart.svg)
+## Experiment flowchart
 
-Installation and usage instructions can be found at the
-[Element documentation](httpws://datajoint.com/docs/elements/element-optogenetics).
+![flowchart](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/flowchart.svg)
+
+## Data pipeline
+
+![pipeline](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/pipeline.svg)
+
+## Getting started
+
+- [Interactive tutorial on GitHub Codespaces](https://github.com/datajoint/workflow-optogenetics#interactive-tutorial)
+
+- [Documentation](https://datajoint.com/docs/elements/element-optogenetics)
