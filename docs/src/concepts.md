@@ -20,13 +20,17 @@ University were consulted during development. The
 [U19 BrainCoGS MATLAB pipeline](https://github.com/BrainCOGS/U19-pipeline-matlab/tree/master/schemas/%2Boptogenetics)
 serves as an important precursor project to this Element.
 
-## Element Features
+## Element Roadmap
 
-This Element stores key information about optogenetic stimulus protocols used during experimental sessions:
-- Stimulus parameters (waveform properties, wavelength, power, duration, etc.)
-- Implant location of the optical fiber.
-- Stimulus pulse generator.
-- Stimulus start and end times during an experimental session.
+This Element stores key information about optogenetic stimulus protocols used during 
+experimental sessions.  Further development of this Element is community driven.  Upon 
+user requests and based on guidance from the Scientific Steering Group we will add 
+further features to this Element. 
+
+- [x] Stimulus parameters (waveform properties, wavelength, power, duration, etc.)
+- [x] Implant location of the optical fiber
+- [x] Stimulus pulse generator
+- [x] Stimulus start and end times during an experimental session
 
 ## Element Architecture
 
@@ -35,7 +39,7 @@ corresponding tables in the database.  Within the workflow, Element Optogenetics
 to upstream Elements including Lab, Animal, and Session.  For more detailed
 documentation on each table, see the API docs for the respective schemas.
 
-![element-optogenetics diagram](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/diagram_opto.svg)
+![pipeline](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/pipeline.svg)
 
 ### `reference` schema ([API docs](../api/workflow_Optogenetics/pipeline/#workflow_Optogenetics.reference.Device))
 
@@ -77,9 +81,3 @@ documentation on each table, see the API docs for the respective schemas.
 | OptoStimParams | Stimulus parameters |
 | OptoProtocol | Protocol for a given session |
 | OptoEvent | Start and end time of the stimulus within a session |
-
-## Roadmap
-
-Further development of this Element is community driven.  Upon user requests and based
-on guidance from the Scientific Steering Group we will add further features to this
-Element.
