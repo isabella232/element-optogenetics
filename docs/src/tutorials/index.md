@@ -11,14 +11,6 @@ which can be modified for a user's specific experimental requirements.  This exa
 workflow uses four Elements (Lab, Animal, Session, and Optogenetics) to construct a
 complete pipeline, and is able to ingest experimental metadata.
 
-<!-- ### Videos
-
-The [Element Optogenetics tutorial](https://www.youtube.com/watch?v=8FDjTuQ52gQ) gives an 
-overview of the workflow files and notebooks as well as core concepts related to 
-optogenetics research.
-
-[![YouTube tutorial](https://img.youtube.com/vi/8FDjTuQ52gQ/0.jpg)](https://www.youtube.com/watch?v=8FDjTuQ52gQ) -->
-
 ### Notebooks
 
 Each of the 
