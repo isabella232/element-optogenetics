@@ -15,6 +15,12 @@ tables that can be combined with other Elements to assemble a fully functional p
 
 ## Getting started
 
-- [Interactive tutorial on GitHub Codespaces](https://github.com/datajoint/workflow-optogenetics#interactive-tutorial)
++ Install from PyPI
 
-- [Documentation](https://datajoint.com/docs/elements/element-optogenetics)
+     ```bash
+     pip install element-optogenetics
+     ```
+
++ [Interactive tutorial on GitHub Codespaces](https://github.com/datajoint/workflow-optogenetics#interactive-tutorial)
+
++ [Documentation](https://datajoint.com/docs/elements/element-optogenetics)
