@@ -26,6 +26,4 @@ fully functional pipeline.
 
 + [Tutorials](./tutorials/index.md) - Start building your data pipeline
 
-+ [Concepts](./concepts.md) - Key concepts, partnerships, and roadmap
-
 + [Code Repository](https://github.com/datajoint/element-optogenetics/){:target="_blank"}
