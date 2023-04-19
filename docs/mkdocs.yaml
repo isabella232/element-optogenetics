@@ -11,6 +11,8 @@ nav:
       - tutorials/index.md
       - Notebook: tutorials/tutorial.ipynb
   - Concepts: concepts.md
+  - Key Partnerships: partnerships.md
+  - Roadmap: roadmap.md
   - Citation: citation.md
   - API: api/ # defer to gen-files + literate-nav
   - Changelog: changelog.md
