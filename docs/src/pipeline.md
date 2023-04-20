@@ -1,4 +1,4 @@
-# Element Architecture
+# Data Pipeline
 
 Each node in the following diagram represents the analysis code in the workflow and the
 corresponding tables in the database.  Within the workflow, Element Optogenetics connects
