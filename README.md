@@ -1,19 +1,20 @@
 # DataJoint Element - Optogenetics
 
-DataJoint Element for managing data from optogenetics experiments. DataJoint Elements collectively standardize
-and automate data collection and analysis for neuroscience experiments.  Each Element is
-a modular pipeline for data storage and processing with corresponding database
-tables that can be combined with other Elements to assemble a fully functional pipeline.
+DataJoint Element for managing data from optogenetics experiments. DataJoint Elements 
+collectively standardize and automate data collection and analysis for neuroscience 
+experiments.  Each Element is a modular pipeline for data storage and processing with 
+corresponding database tables that can be combined with other Elements to assemble a 
+fully functional pipeline.
 
-## Experiment flowchart
+## Experiment Flowchart
 
 ![flowchart](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/flowchart.svg)
 
-## Data pipeline
+## Data Pipeline
 
 ![pipeline](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/pipeline.svg)
 
-## Getting started
+## Getting Started
 
 + Install from PyPI
 
