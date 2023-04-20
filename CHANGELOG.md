@@ -5,8 +5,8 @@ Observes [Semantic Versioning](https://semver.org/spec/v2.0.0.html) standard and
 
 ## [0.1.1] - 2023-04-19
 
-+ Update - Docs
-+ Update - README
++ Update - Docs by adding `Data Pipeline`, `Key Partnerships`, and `Roadmap` pages
++ Update - README with links to tutorials and docs
 
 ## [0.1.0] - 2022-12-19
 
