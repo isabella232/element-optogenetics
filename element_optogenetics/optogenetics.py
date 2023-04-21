@@ -70,8 +70,8 @@ class OptoWaveform(dj.Lookup):
     Attributes:
         waveform_name ( varchar(32) ): Name of waveform
         OptoWaveformType (foreign key): OptoWaveformType primary key
-        normalized_waveform (longblob, nullable): For one cycle, normalized to peak
-        waveform_description ( varchar(255), nullable ): Description of waveform
+        normalized_waveform (longblob, optional): For one cycle, normalized to peak
+        waveform_description ( varchar(255), optional ): Description of waveform
     """
 
     definition = """
@@ -137,16 +137,16 @@ class OptoWaveform(dj.Lookup):
 class OptoStimParams(dj.Manual):
     """A single optical stimulus that repeats.
 
-    Power and intensity are both nullable. Users may wish to document one or the other.
+    Power and intensity are both optional. Users may wish to document one or the other.
 
     Attributes:
         opto_params_id (smallint): Stimulus parameter ID
         OptoWaveform (foreign key): OptoWaveform primary key
         wavelength (int): Wavelength in nm of optical stimulation light
-        power ( decimal(6, 2), nullable ): Total power in mW from light source
-        light_intensity ( decimal(6, 2), nullable ): Power for given area
+        power ( decimal(6, 2), optional ): Total power in mW from light source
+        light_intensity ( decimal(6, 2), optional ): Power for given area
         frequency ( decimal(5, 1) ): Frequency in Hz of the waveform
-        duration ( decimal(5, 1) ): Duration in ms of each optostimulus
+        duration ( decimal(5, 1) ): Duration in ms of each optical stimulus
     """
 
     definition = """
@@ -158,7 +158,7 @@ class OptoStimParams(dj.Manual):
     power=null           : decimal(6, 2)   # (mW) total power from light source
     light_intensity=null : decimal(6, 2)   # (mW/mm2) power for given area
     frequency            : decimal(5, 1)   # (Hz) frequency of the waveform
-    duration             : decimal(5, 1)   # (ms) duration of each opto stimulus
+    duration             : decimal(5, 1)   # (ms) duration of each optical stimulus
     """
 
 
@@ -171,8 +171,8 @@ class OptoProtocol(dj.Manual):
         protocol_id (int): Protocol ID
         OptoStimParams (foreign key): OptoStimParams primary key
         Implantation (foreign key): Implantation primary key
-        Device  (foreign key, nullable): Device  primary key
-        protocol_description ( varchar(255), nullable ): Description of optogenetics protocol
+        Device  (foreign key, optional): Device  primary key
+        protocol_description ( varchar(255), optional ): Description of optogenetics protocol
     """
 
     definition = """
@@ -190,17 +190,15 @@ class OptoProtocol(dj.Manual):
 class OptoEvent(dj.Manual):
     """Start and end time of the stimulus within a session
 
-    WRT: with respect to
-
     Attributes:
         OptoProtocol (foreign key): OptoProtocol primary key
-        stim_start_time (float): Stimulus start time in seconds wrt session start
-        stim_end_time (float): Stimulus end time in seconds wrt session start
+        stim_start_time (float): Stimulus start time in seconds relative to session start
+        stim_end_time (float): Stimulus end time in seconds relative to session start
     """
 
     definition = """
     -> OptoProtocol
-    stim_start_time  : float  # (s) opto stimulus start time wrt session start
+    stim_start_time  : float  # (s) stimulus start time relative to session start
     ---
-    stim_end_time    : float  # (s) opto stimulus end time wrt session start
+    stim_end_time    : float  # (s) stimulus end time relative session start
     """

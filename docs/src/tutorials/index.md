@@ -1,33 +1,14 @@
 # Tutorials
 
-## Installation
++ DataJoint Elements are modular pipelines that can be connected into a complete workflow.  [Workflow Optogenetics](https://github.com/datajoint/workflow-optogenetics)) is an example that combines four DataJoint Elements - Lab, Animal, Session, and Optogenetics.
 
-Installation of the Element requires an integrated development environment and database.
-Instructions to setup each of the components can be found on the 
-[User Instructions](https://datajoint.com/docs/elements/user-guide/) page. These 
-instructions use the example workflows
-(e.g., [workflow-optogenetics](https://github.com/datajoint/workflow-optogenetics)), 
-which can be modified for a user's specific experimental requirements.  This example
-workflow uses four Elements (Lab, Animal, Session, and Optogenetics) to construct a
-complete pipeline, and is able to ingest experimental metadata.
++ Workflow Optogenetics includes an [interactive tutorial on GitHub Codespaces](https://github.com/datajoint/workflow-optogenetics#interactive-tutorial), which is configured for users to run the pipeline.
 
-<!-- ### Videos
++ In the interactive tutorial, the [example notebook](https://github.com/datajoint/workflow-optogenetics/tree/main/notebooks.tutorial.ipynb) describes the pipeline and provides instructions for adding data to the pipeline.
 
-The [Element Optogenetics tutorial](https://www.youtube.com/watch?v=8FDjTuQ52gQ) gives an 
-overview of the workflow files and notebooks as well as core concepts related to 
-optogenetics research.
+## Installation Instructions for Active Projects
 
-[![YouTube tutorial](https://img.youtube.com/vi/8FDjTuQ52gQ/0.jpg)](https://www.youtube.com/watch?v=8FDjTuQ52gQ) -->
++ The Workflow Optogenetics described above can be modified for a user's specific experimental requirements and thereby used in active projects.  
 
-### Notebooks
-
-Each of the 
-[notebooks](https://github.com/datajoint/workflow-optogenetics/tree/main/notebooks) in 
-the workflow steps through ways to interact with the Element itself. 
-
-- [Configure](./01-configure.ipynb)
-   helps configure your local DataJoint installation to point to the correct database.
-- [Workflow Structure](./02-workflow-structure-optional.ipynb) demonstrates the table
-   architecture of the Element and key DataJoint basics for interacting with these
-   tables.
-- [Process](./03-process.ipynb) steps through adding data to these tables.
++ The GitHub Codespace and Dev Container is configured for tutorials and prototyping.  
+We recommend users to configure a database specifically for production pipelines.  Instructions for a local installation of the integrated development environment with a database can be found on the [User Guide](https://datajoint.com/docs/elements/user-guide/) page.

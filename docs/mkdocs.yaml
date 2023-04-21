@@ -6,21 +6,22 @@ repo_url: https://github.com/datajoint/element-optogenetics
 repo_name: datajoint/element-optogenetics
 nav:
   - Element Optogenetics: index.md
+  - Data Pipeline: pipeline.md
+  - Tutorials:
+      - tutorials/index.md
+      - Notebook: tutorials/tutorial.ipynb
   - Concepts: concepts.md
-  - Tutorials: 
-    - Overview: tutorials/index.md
-    - Configure: tutorials/01-configure.ipynb
-    - Workflow Structure: tutorials/02-workflow-structure-optional.ipynb
-    - Process: tutorials/03-process.ipynb
+  - Key Partnerships: partnerships.md
+  - Roadmap: roadmap.md
   - Citation: citation.md
   - API: api/ # defer to gen-files + literate-nav
   - Changelog: changelog.md
 
 # --------------------- NOTES TO CONTRIBUTORS -----------------------
 # Markdown in mkdocs
-# 01. Redering concatenates across single line breaks. This means...
+# 01. Rendering concatenates across single line breaks. This means...
 #     A. We have to be careful to add extra line breaks around paragraphs,
-#        including between the end of a pgf and the beginnign of bullets.
+#        including between the end of a pgf and the beginning of bullets.
 #     B. We can use hard wrapping to make github reviews easier to read.
 #        VSCode Rewrap extension offers a keyboard shortcut for hard wrap
 #        at the ruler, but don't add breaks in [multiword links](example.com)
@@ -46,17 +47,14 @@ nav:
 #     UPSTREAM_REPO=https://github.com/datajoint/element-{ELEMENT}.git \
 #     HOST_UID=$(id -u) docker compose -f docs/docker-compose.yaml up --build
 #     ```
-# 02. Site analytics depend on a local environment variable GOOGLE_ANALYTICS_KEY
-#     You can find this in LastPass or declare with any string to suprress errors
-# 03. The API section will pull docstrings.
-#     A. Follow google styleguide e.g., 
+# 02. The API section will pull docstrings.
+#     A. Follow google style guide e.g., 
 #        https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
 #        With typing suggestions: https://docs.python.org/3/library/typing.html
 #     B. To pull a specific workflow fork, change ./docs/src/api/make_pages.py#L19
-# 04. To see your fork of the workflow-{element} in this render, change the
+# 03. To see your fork of the workflow-{element} in this render, change the
 #     URL in ./docs/src/api/make_pages.py#L19 to your fork.
-# 05. For redirecting options For redirect options, see 'redirects' below.
-# 06. To deploy this site on your fork, 
+# 04. To deploy this site on your fork, 
 #     A. declare a branch called gh-pages
 #     B. go to the your fork > settings > pages 
 #     C. direct pages to render from the gh-pages branch at root
@@ -92,9 +90,6 @@ theme:
 plugins:
   - markdownextradata: {}
   - search
-  # - redirects: # OPTIONAL REDIRECTS
-  #     redirect_maps:
-  #       "index.md": "getting_started.md"
   - mkdocstrings:
       default_handler: python
       handlers:
@@ -136,13 +131,12 @@ markdown_extensions:
   - footnotes
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  
+  - pymdownx.magiclink # Displays bare URLs as links
+  - pymdownx.tasklist: # Renders check boxes in tasks lists
+      custom_checkbox: true
 extra:
   PATCH_VERSION: !ENV PATCH_VERSION
   generator: false # Disable watermark
-  analytics:
-    provider: google
-    property: !ENV GOOGLE_ANALYTICS_KEY
   version:
     provider: mike
   social:
