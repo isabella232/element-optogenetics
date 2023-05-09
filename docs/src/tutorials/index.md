@@ -4,7 +4,7 @@
 
 + Workflow Optogenetics includes an [interactive tutorial on GitHub Codespaces](https://github.com/datajoint/workflow-optogenetics#interactive-tutorial), which is configured for users to run the pipeline.
 
-+ In the interactive tutorial, the [example notebook](https://github.com/datajoint/workflow-optogenetics/tree/main/notebooks.tutorial.ipynb) describes the pipeline and provides instructions for adding data to the pipeline.
++ In the interactive tutorial, the [example notebook](https://github.com/datajoint/workflow-optogenetics/tree/main/notebooks/tutorial.ipynb) describes the pipeline and provides instructions for adding data to the pipeline.
 
 ## Installation Instructions for Active Projects
 
