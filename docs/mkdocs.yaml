@@ -86,7 +86,6 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-
 plugins:
   - markdownextradata: {}
   - search
@@ -109,7 +108,7 @@ plugins:
   - mkdocs-jupyter:
       ignore_h1_titles: True
       ignore: ["*make_pages.py"]
-
+  - section-index
 markdown_extensions:
   - attr_list
   - toc:
