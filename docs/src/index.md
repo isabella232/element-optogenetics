@@ -10,7 +10,7 @@ fully functional pipeline.
 
 ![flowchart](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/flowchart.svg)
 
-## Data Pipeline
+## Data Pipeline Diagram
 
 ![pipeline](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/pipeline.svg)
 
