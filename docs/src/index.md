@@ -10,7 +10,7 @@ fully functional pipeline.
 
 ![flowchart](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/flowchart.svg)
 
-## Data Pipeline
+## Data Pipeline Diagram
 
 ![pipeline](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/pipeline.svg)
 
@@ -27,3 +27,7 @@ fully functional pipeline.
 + [Tutorials](./tutorials/index.md) - Start building your data pipeline
 
 + [Code Repository](https://github.com/datajoint/element-optogenetics/){:target="_blank"}
+
+## Support
+
++ If you need help getting started or run into any errors, please contact our team by email at support@datajoint.com.

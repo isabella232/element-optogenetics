@@ -7,7 +7,7 @@ documentation on each table, see the API docs for the respective schemas.
 
 ![pipeline](https://raw.githubusercontent.com/datajoint/element-optogenetics/main/images/pipeline.svg)
 
-## `reference` schema ([API docs](../api/workflow_Optogenetics/pipeline/#workflow_Optogenetics.reference.Device))
+## `reference` schema ([API docs](https://datajoint.com/docs/elements/element-optogenetics/latest/api/workflow_optogenetics/reference))
 
 | Table | Description |
 | --- | --- |
@@ -35,7 +35,7 @@ documentation on each table, see the API docs for the respective schemas.
 | --- | --- |
 | Session | Unique experimental session identifier |
 
-## `optogenetics` schema ([API docs](../api/element_optogenetics/optogenetics))
+## `optogenetics` schema ([API docs](https://datajoint.com/docs/elements/element-optogenetics/latest/api/element_optogenetics/optogenetics))
 
 | Table               | Description |
 | ---                 |   ---       |

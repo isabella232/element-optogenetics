@@ -25,3 +25,7 @@ fully functional pipeline.
 + [Interactive tutorial on GitHub Codespaces](https://github.com/datajoint/workflow-optogenetics#interactive-tutorial)
 
 + [Documentation](https://datajoint.com/docs/elements/element-optogenetics)
+
+## Support
+
++ If you need help getting started or run into any errors, please contact our team by email at support@datajoint.com.
