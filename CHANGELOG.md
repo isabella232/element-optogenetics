@@ -3,9 +3,9 @@
 Observes [Semantic Versioning](https://semver.org/spec/v2.0.0.html) standard and
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) convention.
 
-## [0.1.2] - 2023-05-08
+## [0.1.2] - 2023-05-11
 
-+ Update - Docs
++ Fix - `.ipynb` dark mode output for all notebooks.
 
 ## [0.1.1] - 2023-04-19
 
