@@ -30,5 +30,4 @@ Experimenter = User
 session.activate(db_prefix + "session", linking_module=__name__)
 
 
-
 optogenetics.activate(db_prefix + "optogenetics", linking_module=__name__)
