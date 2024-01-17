@@ -30,6 +30,7 @@ surgery.activate(db_prefix + "surgery", linking_module=__name__)
 Experimenter = User
 session.activate(db_prefix + "session", linking_module=__name__)
 
+
 @lab.schema
 class Device(dj.Lookup):
     """Table for managing lab devices.
@@ -49,5 +50,6 @@ class Device(dj.Lookup):
     contents = [
         ["OPTG_4", "Optogenetics", "Doric Pulse Sequence Generator"],
     ]
+
 
 optogenetics.activate(db_prefix + "optogenetics", linking_module=__name__)
